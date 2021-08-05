@@ -12,20 +12,16 @@ public class Main {
         LongAdder cashbox = new LongAdder();
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         List<Shop> shops = new ArrayList<>();
-        shops.add(new Shop(cashbox,"Магазин 1"));
-        shops.add(new Shop(cashbox,"Магазин 2"));
-        shops.add(new Shop(cashbox,"Магазин 3"));
+        shops.add(new Shop(cashbox, "Магазин 1"));
+        shops.add(new Shop(cashbox, "Магазин 2"));
+        shops.add(new Shop(cashbox, "Магазин 3"));
 
         try {
             List<Future<Long>> results = executorService.invokeAll(shops);
-            long l = 0L;
             for (Future<Long> result : results) {
-                l += result.get();
+                result.get();
             }
-            System.out.println("Итоговая выручка: "+cashbox.sum());
-            System.out.println("Контрольная сумма: "+l);
-
-            System.out.println();
+            System.out.println("Итоговая выручка: " + cashbox.sum());
         } catch (Exception e) {
             e.printStackTrace();
         }
